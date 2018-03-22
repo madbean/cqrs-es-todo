@@ -155,10 +155,12 @@
             - updateTodoState
             - deleteTodo
     - todoReducer
-        - toTodo(number todoId)
-        - toTodos(string ownerId)
-        - toTodoVersion(number todoId, number version)
-        - toTodos(string ownerId, number version)
+        - switch(type):
+            - todoCreated
+            - titleUpdated
+            - descriptionUpdated
+            - stateUpdated
+            - todoDeleted
     - todoRepository
         - getById: ownerId =>
             db.loadEvents(ownerId).then(history => ({
@@ -174,6 +176,9 @@
         - events
             - createTodo: [todoCreated, titleUpdated, descriptionUpdated]
                 - todoCreated: {
+                    aggregateId: number,
+                    version: number,
+                    id: guid,
                     type: 'todoCreated',
                     payload: {
                         ownerId: number,
@@ -182,6 +187,9 @@
                     },
                 }
                 - titleUpdated: {
+                    aggregateId: number,
+                    version: number,
+                    id: guid,
                     type: 'titleUpdated',
                     payload: {
                         todoId: number,
@@ -189,6 +197,9 @@
                     },
                 }
                 - descriptionUpdated: {
+                    aggregateId: number,
+                    version: number,
+                    id: guid,
                     type: 'descriptionUpdated',
                     payload: {
                         todoId: number,
@@ -197,6 +208,9 @@
                 }
             - updateTodo : [titleUpdated, descriptionUpdated, stateUpdated]
                 - stateUpdated: {
+                    aggregateId: number,
+                    version: number,
+                    id: guid,
                     type: 'stateUpdated',
                     payload: {
                         todoId: number,
@@ -208,6 +222,9 @@
             - updateTodoState : [stateUpdated]
             - deleteTodo : [todoDeleted]
                 - todoDeleted: {
+                    aggregateId: number,
+                    version: number,
+                    id: guid,
                     type: 'todoDeleted',
                     payload: {
                         todoId: number,
@@ -215,7 +232,4 @@
                     },
                 }
 
-
-
 ## Func command
-
